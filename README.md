@@ -48,7 +48,7 @@ const { serialize } = require('dynamoo')
 
 const dynamo = new AWS.DynamoDB()
 
-dynamo.putItem({ Item: serialize(item), TableName: 'Foo' }, console.log)
+dynamo.putItem({ Item: serialize(item), TableName }, console.log)
 ```
 
 The serialized `Item` that gets sent looks like this:
