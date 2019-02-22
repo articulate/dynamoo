@@ -1,0 +1,6 @@
+.eslintrc.js
+.git*
+.npmignore
+.travis.yml
+test.js
+yarn.lock
