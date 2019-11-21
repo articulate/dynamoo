@@ -35,6 +35,7 @@ const item = {
   map: { key: 'val', nested: ['list'] },
   null: null,
   num: 42,
+  set: new Set(['a', 'a', 'b']),
   string: 'strung',
   undef: undefined
 }
@@ -73,6 +74,7 @@ const Item = {
   },
   null: { NULL: true },
   num: { N: '42' },
+  set: { SS: ['a', 'b'] },
   string: { S: 'strung' }
 }
 ```
@@ -109,13 +111,14 @@ expect(parse(serialize(item))).to.eql(item)
 
 ### Caveat emptor
 
-By design, `dynamoo` only supports the following basic data types for attributes:
+By design, `dynamoo` only supports the following data types for attributes:
 
   - `Array`
   - `Boolean`
   - `null`
   - `Number`
   - `Object`
+  - `Set` (of strings)
   - `String`
 
-If you want to use any other fancier types, such as `Map`, `Set`, etc., then this library won't work for you.
+If you want to use any other fancier types, such as `Map`, or `Set` of numbers, etc., then you may need to do some additional work.  Or file an issue.  :wink:
