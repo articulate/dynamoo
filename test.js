@@ -11,6 +11,7 @@ describe('dynamoo', () => {
     map: { key: 'val', nested: ['list'] },
     null: null,
     num: 42,
+    set: new Set(['a', 'a', 'b']),
     string: 'strung',
     undef: undefined
   }
@@ -34,6 +35,7 @@ describe('dynamoo', () => {
     },
     null: { NULL: true },
     num: { N: '42' },
+    set: { SS: ['a', 'b'] },
     string: { S: 'strung' }
   }
 

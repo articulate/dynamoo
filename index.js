@@ -1,5 +1,5 @@
 const {
-  assoc, constant, identity, map, mapObj, reduceObj
+  assoc, constant, identity, map, mapObj, partialRight, reduceObj
 } = require('tinyfunk')
 
 const parseEach = (acc, val, type) =>
@@ -7,6 +7,9 @@ const parseEach = (acc, val, type) =>
 
 const parseOne =
   reduceObj(parseEach, null)
+
+const parseSet = val =>
+  new Set(val)
 
 const parse =
   mapObj(parseOne)
@@ -17,7 +20,8 @@ const getTypes = {
   M:    { xfrm: parse },
   N:    { xfrm: JSON.parse },
   NULL: { xfrm: constant(null) },
-  S:    { xfrm: identity }
+  S:    { xfrm: identity },
+  SS:   { xfrm: parseSet }
 }
 
 const serializeEach = (attrs, val, key) =>
@@ -30,6 +34,9 @@ const serializeOne = val => {
   return { [ label ]: xfrm(val) }
 }
 
+const serializeSet =
+  partialRight(Array.from, [ String ])
+
 const serialize =
   reduceObj(serializeEach, {})
 
@@ -39,13 +46,21 @@ const putTypes = {
   null:    { label: 'NULL', xfrm: constant(true) },
   number:  { label: 'N',    xfrm: JSON.stringify },
   object:  { label: 'M',    xfrm: serialize },
+  set:     { label: 'SS',   xfrm: serializeSet },
   string:  { label: 'S',    xfrm: identity }
 }
-const typeOf = val =>
-  Array.isArray(val)
-    ? 'array'
-    : val === null
-      ? 'null'
-      : typeof val
+
+const typeOf = val => {
+  switch (true) {
+    case Array.isArray(val):
+      return 'array'
+    case val instanceof Set:
+      return 'set'
+    case val === null:
+      return 'null'
+    default:
+      return typeof val
+  }
+}
 
 module.exports = { parse, serialize }
