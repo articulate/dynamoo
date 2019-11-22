@@ -1,6 +1,6 @@
 {
   "name": "dynamoo",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Serialize and parse DynamoDB items",
   "main": "index.js",
   "repository": "git@github.com:articulate/dynamoo.git",
