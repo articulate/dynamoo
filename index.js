@@ -1,5 +1,5 @@
 const {
-  assoc, compose, constant, identity, map, mapObj, reduceObj
+  assoc, constant, identity, map, mapObj, partialRight, reduceObj
 } = require('tinyfunk')
 
 const parseEach = (acc, val, type) =>
@@ -35,7 +35,7 @@ const serializeOne = val => {
 }
 
 const serializeSet =
-  compose(map(String), Array.from)
+  partialRight(Array.from, [ String ])
 
 const serialize =
   reduceObj(serializeEach, {})
